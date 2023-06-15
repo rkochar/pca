@@ -1,8 +1,12 @@
-% Put data in X
-X = randi(10, 10, 10)
+%Load image and convert it to a vector
+image=imread('lena_gray.png');
+figure, imshow(image)
+title('Original Image');
+[h, w, d]=size(image);
+X = double(reshape(image,w*h,d))/255;
 
 % Set the number of snapshots
-numSnapshots = 3
+numSnapshots = 42;
 
 % Select random snapshots
 snapshotIndices = randperm(size(X, 1), numSnapshots);
@@ -16,13 +20,17 @@ snapshots = snapshots - meanSnapshots;
 covSnapshots = (snapshots' * snapshots) / (size(snapshots, 1) - 1);
 
 % Compute eigenvectors (V) and eigenvalues (D)
-[V, D] = eig(covSnapshots);
+[V, D] = eigs(4);
 
 % Descending sort the eigenvectors by eigenvalues
 [~, idx] = sort(diag(D), 'descend');
 V = V(:, idx);
+em1 = V(:, 1);
 
-% Project the original data onto the principal components
-X_centered = X - meanSnapshots;
-reducedData = X_centered * V;
-disp(reducedData);
+%project image onto eigenspace
+p1x=X'*em1*em1;
+
+%convert eigenvector to image and display the image
+image =uint8(reshape(p1x,h,w,d)*255);
+figure, imshow(image)
+title('PCA 2.1 image');

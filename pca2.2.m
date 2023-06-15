@@ -1,9 +1,4 @@
-% Put data in X
-X = randi(10, 10, 10)
-numSamples = 5 
-numEigenvectors = 3
-
-% Select random samples and kernel
+kernel
 sampleIndices = randperm(size(X, 1), numSamples);
 samples = X(sampleIndices, :);
 kernelMatrix = samples * samples';
