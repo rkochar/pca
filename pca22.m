@@ -1,11 +1,13 @@
 %Load image and convert it to a vector
-image=imread('lena_gray.png');
+image=imread('exampleimage.png');
 figure, imshow(image)
 title('Original Image');
+set(gcf, 'NextPlot', 'new');
+
 [h, w, d]=size(image);
 X = double(reshape(image,w*h,d))/255;
 numSamples = 420;
-numEigenvectors = 1;
+numEigenvectors = 3;
 
 % Select random samples and kernel
 sampleIndices = randperm(size(X, 1), numSamples);
@@ -26,6 +28,10 @@ projectionMatrix = projectionMatrix(:, 1:numEigenvectors) ./ scalingFactors';
 
 % Project the original data onto the principal components
 p1x = X * projectionMatrix;
+
+% Plot residuals
+histogram(X - p1x, 10);
+title('Histogram of residuals of image 2.2');
 
 %convert eigenvector to image and display the image
 image =uint8(reshape(p1x,h,w,d)*255);
