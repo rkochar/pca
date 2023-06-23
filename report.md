@@ -10,10 +10,11 @@
 - Covariance matrix can be expensive to store because of it's size grows with quadratic complexity to size of data.
 
 ### Gram Matrix
-- Size of gram matrix is square of number of data points
+- Size of gram matrix is square of number of data points. In images, that is usually much smaller than number of features.
 - Depends on selecting a good kernel
 - Hard to get inference (in covariance, the eigenvectors gave some insights)
 - can do non-linear decomposition
+- Works best when 
 
 ## Task 2
 Nystrom method focuses on approximating large covariance or kernel matrices, while the Snapshot method reduces the complexity by operating on a subset of the data. The choice between the two methods depends on the specific requirements of the problem, such as dataset size, available memory, interpretability, and the need for nonlinear dimensionality reduction.
